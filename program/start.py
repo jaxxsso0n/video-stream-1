@@ -8,9 +8,9 @@ from config import (
     ALIVE_IMG,
     ALIVE_NAME,
     BOT_USERNAME,
-    GROUP_SUPPORT,
+    SUPPORT_GROUP,
     OWNER_USERNAME,
-    UPDATES_CHANNEL,
+    SUPPORT_CHANNEL,
 )
 from program import __version__
 from driver.core import user, bot
@@ -85,10 +85,10 @@ async def start_(c: Client, message: Message):
                 ],
                 [
                     InlineKeyboardButton(
-                        "👥 Official Group", url=f"https://t.me/{GROUP_SUPPORT}"
+                        "👥 Official Group", url=f"https://t.me/{SUPPORT_GROUP}"
                     ),
                     InlineKeyboardButton(
-                        "📣 Official Channel", url=f"https://t.me/{UPDATES_CHANNEL}"
+                        "📣 Official Channel", url=f"https://t.me/{SUPPORT_CHANNEL}"
                     ),
                 ],
                 [
@@ -119,9 +119,9 @@ async def alive(c: Client, message: Message):
     keyboard = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("✨ Group", url=f"https://t.me/{GROUP_SUPPORT}"),
+                InlineKeyboardButton("✨ Group", url=f"https://t.me/{SUPPORT_GROUP}"),
                 InlineKeyboardButton(
-                    "📣 Channel", url=f"https://t.me/{UPDATES_CHANNEL}"
+                    "📣 Channel", url=f"https://t.me/{SUPPORT_CHANNEL}"
                 ),
             ]
         ]
@@ -199,8 +199,8 @@ async def new_chat(c: Client, m: Message):
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton("📣 Channel", url=f"https://t.me/{UPDATES_CHANNEL}"),
-                            InlineKeyboardButton("💭 Support", url=f"https://t.me/{GROUP_SUPPORT}")
+                            InlineKeyboardButton("📣 Channel", url=f"https://t.me/{SUPPORT_CHANNEL}"),
+                            InlineKeyboardButton("💭 Support", url=f"https://t.me/{SUPPORT_GROUP}")
                         ],
                         [
                             InlineKeyboardButton("👤 Assistant", url=f"https://t.me/{ass_uname}")
