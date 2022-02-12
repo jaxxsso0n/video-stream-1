@@ -9,9 +9,9 @@ from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMa
 
 from config import (
     BOT_USERNAME,
-    GROUP_SUPPORT,
+    SUPPORT_GROUP,
     OWNER_USERNAME,
-    UPDATES_CHANNEL,
+    SUPPORT_CHANNEL,
     SUDO_USERS,
     OWNER_ID,
 )
@@ -47,10 +47,10 @@ async def start_set(_, query: CallbackQuery):
                 ],
                 [
                     InlineKeyboardButton(
-                        "👥 Official Group", url=f"https://t.me/{GROUP_SUPPORT}"
+                        "👥 Official Group", url=f"https://t.me/{SUPPORT_GROUP}"
                     ),
                     InlineKeyboardButton(
-                        "📣 Official Channel", url=f"https://t.me/{UPDATES_CHANNEL}"
+                        "📣 Official Channel", url=f"https://t.me/{SUPPORT_CHANNEL}"
                     ),
                 ],
                 [
@@ -81,7 +81,7 @@ async def quick_set(_, query: CallbackQuery):
 
 👩🏻‍💼 » /vstream - Type this with give the YouTube live stream video link or m3u8 link to play live Video. (Remember to don't play local audio/video files or non-live YouTube video by using this command!, because it will cause unforeseen problems.)
 
-❓ Have questions? Contact us in [Support Group](https://t.me/{GROUP_SUPPORT}).""",
+❓ Have questions? Contact us in [Support Group](https://t.me/{SUPPORT_GROUP}).""",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("🔙 Go Back", callback_data="command_list")]]
         ),
@@ -110,7 +110,7 @@ async def guide_set(_, query: CallbackQuery):
 
 📌 If the userbot not joined to video chat, make sure if the video chat already turned on and the userbot in the chat.
 
-💡 If you have a follow-up questions about this bot, you can tell it on my support chat here: @{GROUP_SUPPORT}.""",
+💡 If you have a follow-up questions about this bot, you can tell it on my support chat here: @{SUPPORT_GROUP}.""",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("🔙 Go Back", callback_data="home_start")]]
         ),
