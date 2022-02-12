@@ -23,9 +23,7 @@ from program.utils.inline import (
 )
 from config import (
     BOT_USERNAME,
-    GROUP_SUPPORT,
     IMG_5,
-    UPDATES_CHANNEL,
 )
 from pyrogram.types import (
     CallbackQuery,
