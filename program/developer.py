@@ -1,3 +1,4 @@
+import os
 import re
 import sys
 import shutil
@@ -10,12 +11,10 @@ from sys import version as pyver
 from inspect import getfullargspec
 
 from config import BOT_USERNAME as bname
-from driver.core import bot
+from driver.veez import bot
 from driver.filters import command
 from pyrogram import Client, filters
-from driver.database.dbchat import remove_served_chat
-from driver.decorators import bot_creator, sudo_users_only, errors
-from driver.utils import remove_if_exists
+from driver.decorators import sudo_users_only, errors
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 
 
@@ -74,7 +73,7 @@ async def executor(client, message):
             [
                 [
                     InlineKeyboardButton(
-                        text="⏳", callback_data=f"runtime {t2-t1} seconds"
+                        text="⏳", callback_data=f"runtime {t2-t1} Seconds"
                     )
                 ]
             ]
@@ -86,7 +85,7 @@ async def executor(client, message):
             reply_markup=keyboard,
         )
         await message.delete()
-        remove_if_exists(filename)
+        os.remove(filename)
     else:
         t2 = time()
         keyboard = InlineKeyboardMarkup(
@@ -94,7 +93,7 @@ async def executor(client, message):
                 [
                     InlineKeyboardButton(
                         text="⏳",
-                        callback_data=f"runtime {round(t2-t1, 3)} seconds",
+                        callback_data=f"runtime {round(t2-t1, 3)} Seconds",
                     )
                 ]
             ]
@@ -112,7 +111,7 @@ async def runtime_func_cq(_, cq):
 @sudo_users_only
 async def shellrunner(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="**usage:**\n\n» /sh echo hello world")
+        return await edit_or_reply(message, text="**usage:**\n\n» /sh git pull")
     text = message.text.split(None, 1)[1]
     if "\n" in text:
         code = text.split("\n")
@@ -127,7 +126,7 @@ async def shellrunner(client, message):
                 )
             except Exception as err:
                 print(err)
-                await edit_or_reply(message, text=f"`ERROR:`\n\n```{err}```")
+                await edit_or_reply(message, text=f"`ERROR:`\n```{err}```")
             output += f"**{code}**\n"
             output += process.stdout.read()[:-1].decode("utf-8")
             output += "\n"
@@ -150,7 +149,7 @@ async def shellrunner(client, message):
                 tb=exc_tb,
             )
             return await edit_or_reply(
-                message, text=f"`ERROR:`\n\n```{''.join(errors)}```"
+                message, text=f"`ERROR:`\n```{''.join(errors)}```"
             )
         output = process.stdout.read()[:-1].decode("utf-8")
     if str(output) == "\n":
@@ -165,14 +164,14 @@ async def shellrunner(client, message):
                 reply_to_message_id=message.message_id,
                 caption="`OUTPUT`",
             )
-            return remove_if_exists("output.txt")
-        await edit_or_reply(message, text=f"`OUTPUT:`\n\n```{output}```")
+            return os.remove("output.txt")
+        await edit_or_reply(message, text=f"`OUTPUT:`\n```{output}```")
     else:
-        await edit_or_reply(message, text="`OUTPUT:`\n\n`no output`")
+        await edit_or_reply(message, text="`OUTPUT:`\n`no output`")
 
 
 @Client.on_message(command(["leavebot", f"leavebot{bname}"]) & ~filters.edited)
-@bot_creator
+@sudo_users_only
 async def bot_leave_group(_, message):
     if len(message.command) != 2:
         await message.reply_text(
@@ -182,7 +181,6 @@ async def bot_leave_group(_, message):
     chat = message.text.split(None, 2)[1]
     try:
         await bot.leave_chat(chat)
-        await remove_served_chat(chat)
     except Exception as e:
         await message.reply_text(f"❌ procces failed\n\nreason: `{e}`")
         print(e)
